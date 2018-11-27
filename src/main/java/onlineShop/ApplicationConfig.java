@@ -11,6 +11,8 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @Configuration
 public class ApplicationConfig {
@@ -36,10 +38,19 @@ public class ApplicationConfig {
 
 		return dataSource;
 	}
+	
+	 // Handler for multipart form data, 本地上传图片到服务器
+    @Bean
+    public MultipartResolver multipartResolver() {
+   	 CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+   	 multipartResolver.setMaxUploadSize(10240000);
+   	 return multipartResolver;
+    }
+
 
 	private final Properties hibernateProperties() {
 		Properties hibernateProperties = new Properties();
-		hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+		hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "update");
 		hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 		return hibernateProperties;
 	}
