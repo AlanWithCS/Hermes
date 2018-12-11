@@ -11,10 +11,43 @@
 <script src="<c:url value="/resource/bootstrap/js/bootstrap.min.js"/>"></script>
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/resource/css/overall.css"/>">
+
+<script type="text/javascript">
+	window.onload = function() {
+		var bigImg = document.createElement("img");
+		bigImg.src = getImgSource();
+		bigImg.width = "200";
+		bigImg.style = "margin-top:100px;";
+		var myDiv = document.getElementById('imgDiv');
+		myDiv.appendChild(bigImg);
+	};
+
+	function getImgSource() {
+   	 var xhttp = new XMLHttpRequest();
+   	 var url = "http://localhost:8080/AdsSystem/ad";
+   	 xhttp.open("GET", url, false);
+   	 xhttp.send();
+   	 var response = xhttp.responseText;
+   	 var obj = JSON.parse(response);
+   	 console.log(obj.image_url);
+   	 return obj[0].image_url
+    }
+</script>
+    <style>
+        .left,
+        .container {
+            padding: 10px;
+            display: table-cell;
+            border: 0px solid #f40;
+        }
+    </style>
+
+
 </head>
 <body>
 	<!-- Slider -->
 	<div class="jumbotron">
+		<div id="imgDiv" class = "left"></div>
 		<div class="container">
 			<br>
 			<div id="myCarousel" class="carousel slide" data-ride="carousel">
